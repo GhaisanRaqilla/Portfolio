@@ -1,156 +1,74 @@
-:root {
-  --red: #e01616;
-  --ink: #fff;
-  --paper: #e9e9e9;
-  box-sizing: border-box;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --red: #c41212;
-    --paper: #dcdcdc;
-  }
-}
-:root[data-theme="dark"] {
-  --red: #c41212;
-  --paper: #dcdcdc;
-}
 * {
-  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
 html {
-  scroll-padding-top: env(safe-area-inset-top, 0px);
+  scroll-behavior: smooth;
 }
-body {
-  background: var(--red);
-  color: var(--ink);
-  font-family: "Archivo", Arial, sans-serif;
+
+header {
+  background-color: #DDC19E;
   min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
+  padding: 140px 20px 40px; /* ruang untuk navbar */
 }
-body::after {
-  content: "";
+
+/* ===== NAVBAR ===== */
+.navbar {
   position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.35;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-nav {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 22px 4vw;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  flex-wrap: wrap;
-}
-.logo {
-  font-family: "Anton", Impact, sans-serif;
-  font-size: 24px;
-  letter-spacing: 0.02em;
-  margin-right: auto;
-}
-nav a {
-  color: var(--ink);
-  text-decoration: none;
-}
-.sp {
-  opacity: 0.9;
-}
-.cta {
-  background: #fff;
-  color: var(--red);
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 700;
-}
-.hero {
-  position: relative;
-  height: min(78vh, 640px);
-  min-height: 420px;
-  padding: 0 4vw;
-}
-h1 {
-  position: absolute;
-  left: 3vw;
-  top: 2vh;
-  font-family: "Anton", Impact, sans-serif;
-  font-weight: 400;
-  color: var(--paper);
-  font-size: clamp(110px, 24vw, 330px);
-  line-height: 0.9;
-  letter-spacing: 0.01em;
-  transform-origin: top left;
-  transform: scaleY(1.45);
-  white-space: nowrap;
-  -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent 98%);
-  mask-image: linear-gradient(90deg, #000 55%, transparent 98%);
-  filter: contrast(1.1);
-  text-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
-}
-.photo {
-  position: absolute;
-  right: 3vw;
-  bottom: 0;
-  width: min(46vw, 560px);
-}
-.photo img {
-  display: block;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  filter: grayscale(1) contrast(1.35) brightness(1.02);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 22px 48px;
+  background-color: #1B4F87;
+  z-index: 100;
 }
-.star {
-  position: absolute;
-  font-size: 26px;
-  color: #fff;
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
 }
-.s1 {
-  right: 2.5vw;
-  top: 34%;
-}
-.s2 {
-  left: 42%;
-  bottom: 6%;
-}
-.bio {
-  position: absolute;
-  left: 4vw;
-  bottom: 3vh;
-  max-width: 300px;
-  font-size: 11px;
-  line-height: 1.5;
+
+.nav-links a {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  text-align: justify;
-  letter-spacing: 0.03em;
-  z-index: 3;
+  color: #EAD9BF;
+  text-decoration: none;
+  position: relative;
 }
-@media (max-width: 640px) {
-  .hero {
-    height: 560px;
-  }
-  h1 {
-    font-size: 30vw;
-    transform: scaleY(1.25);
-  }
-  .photo {
-    width: 78vw;
-    right: -6vw;
-  }
-  .bio {
-    bottom: 2vh;
-    max-width: 56vw;
-    font-size: 10px;
-  }
-  .sp {
-    display: none;
-  }
+
+/* garis bawah animasi saat hover */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: #EAD9BF;
+  transition: width 0.25s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ===== JUDUL ===== */
+.sub {
+  font-family: "Bodoni Moda", serif;
+  font-weight: 700;
+  color: #1B4F87;
+  text-align: center;
+  font-size: clamp(90px, 19vw, 280px);
+  line-height: 0.85;
+  letter-spacing: 0.02em;
+  padding: 0 20px;
 }

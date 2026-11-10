@@ -1,42 +1,286 @@
 <!doctype html>
 <html lang="id">
   <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <title>Portfolio — Ghaisan Raqilla</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@700;800&family=Montserrat:wght@500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="./assets/LOGOport.png" type="image/x-icon">
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: "#1B4F87" /* biru navbar & judul */,
+              sand: "#DDC19E" /* background hero */,
+              cream: "#EAD9BF" /* teks navbar */,
+            },
+            fontFamily: {
+              display: ['"Bodoni Moda"', "serif"],
+              nav: ["Montserrat", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body>
-    <nav>
-      <span class="logo">RAQILLA</span>
-      <span class="sp">✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦</span>
-      <a href="#home">Tentang saya</a><span class="sp">✦</span>
-      <a href="#karya">Karya</a><span class="sp">✦</span>
-      <a href="#kontak">Kontak</a>
-      <a class="cta" href="#kontak">Hubungi saya</a>
-    </nav>
-    <main class="hero" id="home">
-      <h1>PORTFOLIO</h1>
-      <div class="photo">
-        <img src="./assets/Potret Profil Siswa Berseragam SMA.png" alt="Foto Profil" />
+
+  <body class="bg-sand scroll-smooth">
+    <!-- ===== NAVBAR ===== -->
+    <header
+      id="navbar"
+      class="fixed top-0 left-0 z-50 w-full bg-brand px-6 py-5 md:px-12 -translate-y-full transition-all duration-700 ease-out"
+    >
+      <nav class="flex items-center justify-between">
+        <!-- LOGO -->
+        <a
+          href="#home"
+          id="logo"
+          aria-label="Kembali ke beranda"
+          class="group block opacity-0 transition-opacity duration-700"
+        >
+          <img
+            src="/assets/LOGOport.png"
+            alt="Logo Portfolio"
+            class="h-9 w-auto transition-transform duration-300 group-hover:scale-110 md:h-11"
+          />
+        </a>
+
+        <ul class="flex gap-6 md:gap-10">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#project" class="nav-link">Project</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <main
+      id="home"
+      class="relative flex h-screen min-h-[560px] flex-col items-center justify-end overflow-hidden bg-sand pt-24 md:flex-row md:items-end md:justify-start md:pt-16"
+    >
+      <!-- Pita teks berjalan (marquee) - berada di belakang foto -->
+      <div
+        id="bands"
+        aria-hidden="true"
+        class="pointer-events-none absolute -left-[15%] -bottom-[2%] z-[1] h-28 w-[130%] translate-y-10 opacity-0 transition-all duration-1000 ease-out md:h-40"
+      >
+        <!-- pita belakang (arah berlawanan) -->
+        <div
+          class="marquee absolute inset-x-0 top-[78%] -translate-y-1/2 -rotate-[7deg] overflow-hidden bg-brand/90 py-1.5 md:py-2.5"
+          data-items="DESIGNER|FRONT END|WEB DEVELOPER"
+          data-direction="1"
+          data-speed="60"
+        >
+          <div
+            class="marquee-track flex w-max whitespace-nowrap font-display font-bold tracking-[0.04em] text-white/90 text-[clamp(13px,2.3vw,34px)] will-change-transform"
+          ></div>
+        </div>
+
+        <!-- pita depan -->
+        <div
+          class="marquee absolute inset-x-0 top-[45%] -translate-y-1/2 -rotate-[4deg] overflow-hidden bg-white py-1.5 shadow-lg md:py-2.5"
+          data-items="FRONT END|WEB DEVELOPER|DESIGNER"
+          data-direction="-1"
+          data-speed="90"
+        >
+          <div
+            class="marquee-track flex w-max whitespace-nowrap font-display font-bold tracking-[0.04em] text-brand text-[clamp(13px,2.3vw,34px)] will-change-transform"
+          ></div>
+        </div>
       </div>
-      <span class="star s1">✦</span><span class="star s2">✦</span>
-      <p class="bio">
-       Halo, saya seorang Web Developer dan Designer penuh semangat
-       yang gemar menciptakan situs web modern dengan tata letak yang rapi, 
-       visual kreatif, serta pengalaman pengguna yang mulus.
-      </p>
+
+      <!-- Foto: tinggi dibatasi supaya tidak melebihi layar & tidak menutupi judul -->
+      <div
+        id="photo-wrap"
+        class="relative z-[5] order-2 flex min-h-0 shrink-0 items-end justify-center transition-transform duration-300 ease-out md:order-none md:justify-start"
+      >
+        <img
+          id="photo"
+          src="/assets/Potret Siswa OSIS Transparan.png"
+          alt="Foto profil"
+          class="block h-auto w-auto max-w-full translate-y-10 object-contain object-bottom opacity-0 max-h-[48vh] transition-all duration-1000 ease-out md:max-h-[calc(100vh-4rem)] md:max-w-[40vw]"
+        />
+      </div>
+
+      <!-- Judul -->
+      <h1
+        id="title"
+        class="relative z-10 order-1 px-6 text-center font-display font-bold text-brand text-[clamp(56px,16vw,200px)] leading-[0.9] tracking-[0.01em] md:order-none md:-ml-[2vw] md:self-center md:px-0 md:pb-[12vh] md:text-left md:text-[clamp(85px,15vw,300px)]"
+      >
+        <span class="split block overflow-hidden pb-[0.04em]">PORT</span>
+        <span class="split block overflow-hidden pb-[0.04em]">FOLIO</span>
+      </h1>
     </main>
-    <div id="karya">
-        
-    </div>
-    <div id="kontak"></div>
+
+    <!-- Style kecil untuk link navbar (underline animasi saat hover) -->
+    <style type="text/tailwindcss">
+      @layer components {
+        .nav-link {
+          @apply relative font-nav text-[0.7rem] font-semibold uppercase tracking-[0.15em]
+               text-cream md:text-xs;
+        }
+        .nav-link::after {
+          content: "";
+          @apply absolute left-0 -bottom-1.5 h-0.5 w-0 bg-cream transition-all duration-300;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+          @apply w-full;
+        }
+      }
+    </style>
+
+    <script>
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      const navbar = document.getElementById("navbar");
+      const photo = document.getElementById("photo");
+      const photoWrap = document.getElementById("photo-wrap");
+      const links = document.querySelectorAll(".nav-link");
+      const logo = document.getElementById("logo");
+      const bands = document.getElementById("bands");
+
+      /* 1. Pecah judul jadi huruf, lalu naik satu-satu */
+      const chars = [];
+      document.querySelectorAll("#title .split").forEach((line) => {
+        const text = line.textContent.trim();
+        line.textContent = "";
+        line.setAttribute("aria-label", text);
+        [...text].forEach((ch) => {
+          const s = document.createElement("span");
+          s.textContent = ch;
+          s.setAttribute("aria-hidden", "true");
+          s.className = "inline-block translate-y-full";
+          line.appendChild(s);
+          chars.push(s);
+        });
+      });
+
+      /* 2. Urutan animasi saat halaman dimuat */
+      function intro() {
+        // navbar turun
+        navbar.classList.remove("-translate-y-full");
+
+        // judul: huruf naik bergantian
+        chars.forEach((s, i) => {
+          s.style.transition = `transform 0.9s cubic-bezier(.2,.8,.2,1) ${0.25 + i * 0.07}s`;
+          requestAnimationFrame(() => s.classList.remove("translate-y-full"));
+        });
+
+        // foto: fade + naik
+        photo.style.transitionDelay = "0.5s";
+        photo.classList.remove("translate-y-10", "opacity-0");
+
+        // logo muncul, lalu pita naik dari bawah
+        logo.classList.remove("opacity-0");
+        bands.style.transitionDelay = "0.9s";
+        bands.classList.remove("translate-y-10", "opacity-0");
+      }
+
+      if (reduceMotion) {
+        navbar.classList.remove("-translate-y-full");
+        photo.classList.remove("translate-y-10", "opacity-0");
+        chars.forEach((s) => s.classList.remove("translate-y-full"));
+        logo.classList.remove("opacity-0");
+        bands.classList.remove("translate-y-10", "opacity-0");
+      } else {
+        window.addEventListener("load", () => setTimeout(intro, 100));
+      }
+
+      /* 3. Foto bergeser halus mengikuti mouse (desktop) */
+      if (!reduceMotion && window.matchMedia("(min-width: 768px)").matches) {
+        window.addEventListener("mousemove", (e) => {
+          const x = (e.clientX / window.innerWidth - 0.5) * 16;
+          const y = (e.clientY / window.innerHeight - 0.5) * 8;
+          photoWrap.style.transform = `translate(${x}px, ${y}px)`;
+        });
+      }
+
+      /* 4. Navbar mengecil saat di-scroll */
+      window.addEventListener("scroll", () => {
+        const scrolled = window.scrollY > 20;
+        navbar.classList.toggle("py-3", scrolled);
+        navbar.classList.toggle("py-5", !scrolled);
+        navbar.classList.toggle("shadow-lg", scrolled);
+      });
+
+      /* 5. Tandai link aktif saat diklik */
+      links.forEach((a) =>
+        a.addEventListener("click", () => {
+          links.forEach((l) => l.classList.remove("active"));
+          a.classList.add("active");
+        }),
+      );
+
+      /* 6. Teks berjalan (marquee) seamless, tanpa putus */
+      const marquees = [...document.querySelectorAll(".marquee")].map((el) => ({
+        el,
+        track: el.querySelector(".marquee-track"),
+        items: el.dataset.items.split("|"),
+        dir: Number(el.dataset.direction) || -1, // -1 = ke kiri, 1 = ke kanan
+        speed: Number(el.dataset.speed) || 80, // px per detik
+        x: 0,
+        w: 0,
+      }));
+
+      function buildMarquee(m) {
+        const groupHTML =
+          `<div class="flex shrink-0 items-center">` +
+          m.items
+            .map(
+              (t) =>
+                `<span class="px-3 md:px-5">${t}</span><span class="px-1 font-sans" aria-hidden="true">&#10045;</span>`,
+            )
+            .join("") +
+          `</div>`;
+
+        m.track.innerHTML = groupHTML;
+        m.w = m.track.firstElementChild.offsetWidth;
+        if (!m.w) return;
+
+        // gandakan grup sampai cukup menutupi lebar pita (x2)
+        const need = Math.ceil((m.el.offsetWidth * 2) / m.w) + 1;
+        for (let i = 1; i < need; i++)
+          m.track.insertAdjacentHTML("beforeend", groupHTML);
+
+        m.x = m.dir < 0 ? 0 : -m.w;
+        m.track.style.transform = `translate3d(${m.x}px,0,0)`;
+      }
+
+      const buildAll = () => marquees.forEach(buildMarquee);
+      buildAll();
+      document.fonts && document.fonts.ready.then(buildAll); // hitung ulang setelah font termuat
+      window.addEventListener("resize", buildAll);
+
+      if (!reduceMotion) {
+        let last = performance.now();
+        const tick = (now) => {
+          const dt = Math.min((now - last) / 1000, 0.05);
+          last = now;
+          marquees.forEach((m) => {
+            if (!m.w) return;
+            m.x += m.dir * m.speed * dt;
+            if (m.dir < 0 && m.x <= -m.w) m.x += m.w;
+            if (m.dir > 0 && m.x >= 0) m.x -= m.w;
+            m.track.style.transform = `translate3d(${m.x}px,0,0)`;
+          });
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }
+    </script>
   </body>
 </html>
