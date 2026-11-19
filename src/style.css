@@ -285,167 +285,384 @@ body {
 }
 
 /* ========== ACHIEVEMENTS ========== */
-#achievements {
-  padding: 80px 0 0;
-  background: #d3dad9;
-  color: black;
-  overflow: hidden;
+#pencapaian {
+  background: var(--gray);
+  color: var(--ink);
   position: relative;
   z-index: 2;
 }
 
-.achievements-header {
-  padding: 0 8vw 20px;
+/* ===== Kolaborasi ===== */
+.dino {
+  fill: #171313;
+}
+.garis-tanah {
+  height: 2.5px;
+  width: 100%;
+  background: #171313;
+}
+.tombol-kolaborasi {
+  display: inline-block;
+  margin-top: 1.4rem;
+  padding: 0.9rem 2rem;
+  background: #171313;
+  color: #f5f4f2;
+  font-family: var(--head);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 0.35rem;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease;
+}
+.tombol-kolaborasi:hover {
+  transform: translateY(-3px);
+  background: #000000;
 }
 
-.achievements-header h2 {
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 8px;
+/* ===== Sertifikat ===== */
+.kotak-sertifikat {
+  border: 2px solid #171313;
+  border-radius: 0.85rem;
+  padding: 1rem;
+  background: transparent;
 }
-
-.achievements-header p {
-  opacity: 0.7;
-  font-size: 0.95rem;
-  letter-spacing: 0.05em;
-  top: 130px;
+.kartu-sertifikat {
+  display: grid;
+  grid-template-columns: 1fr 1.85fr;
+  gap: 0.85rem;
 }
-
-/* Horizontal section */
-.horizontal-section {
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-}
-
-.panels {
-  display: flex;
-  height: 100%;
-  width: max-content;
-  align-items: center;
-  gap: 24px;
-  padding: 0 8vw;
-}
-
-.panel {
-  flex-shrink: 0;
-  width: 340px;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-@media (min-width: 768px) {
-  .panel {
-    width: 400px;
-  }
-}
-
-.panel.light {
-  background: #e8e8e8;
-  color: #0a0a0a;
-}
-.panel.dark {
-  background: #111;
-  color: white;
-}
-
-.card-inner {
-  display: flex;
-  height: 230px;
-}
-
-.card-left {
-  width: 42%;
-  padding: 18px;
+.kolom-ikon {
+  border: 2px solid #171313;
+  border-radius: 0.55rem;
+  padding: 0.85rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 15rem;
 }
-
-.panel.light .card-left {
-  background: #e0e0e0;
-}
-.panel.dark .card-left {
-  background: #0a0a0a;
-}
-
-.card-top {
+.kolom-gambar {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 10px;
-  opacity: 0.7;
+  flex-direction: column;
+  gap: 0.65rem;
 }
-
-.card-top svg {
-  width: 14px;
-  height: 14px;
+.sertifikat-bingkai {
+  border: 2px solid #171313;
+  border-radius: 0.55rem;
+  aspect-ratio: 4/3;
+  background: #ffffff;
+  overflow: hidden;
 }
-
-.card-top .more {
-  margin-left: auto;
-  font-size: 16px;
-  opacity: 0.4;
-}
-
-.card-title {
-  font-family: "Poppins", sans-serif;
-  font-weight: 700;
-  font-size: 3.4rem;
-  line-height: 0.9;
-  text-transform: uppercase;
-}
-
-.card-title.small {
-  font-size: 2.4rem;
-}
-
-.card-right {
-  width: 58%;
-  padding: 12px;
-  display: flex;
-  align-items: center;
-}
-
-.panel.light .card-right {
-  background: white;
-}
-.panel.dark .card-right {
-  background: #1a1a1a;
-}
-
-.card-right img {
+.sertifikat-bingkai img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top;
-  border-radius: 10px;
+  object-position: center;
+  display: block;
+  transition: transform 0.45s ease;
+}
+.kartu-sertifikat:hover .sertifikat-bingkai img {
+  transform: scale(1.06) rotate(1deg);
+}
+.judul-sertifikat {
+  border: 2px solid #171313;
+  border-radius: 0.45rem;
+  padding: 0.45rem 0.75rem;
+  font-weight: 800;
 }
 
-.card-footer {
-  padding: 14px 18px;
+/* Responsif untuk layar HP */
+@media (max-width: 640px) {
+  .kartu-sertifikat {
+    grid-template-columns: 1fr;
+  }
+  .kolom-ikon {
+    min-height: auto;
+    flex-direction: row;
+    align-items: center;
+  }
+} /* ========== ACHIEVEMENTS & HORIZONTAL SCROLL ========== */
+#pencapaian {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 0 4rem 6vw;
+  background: var(--gray);
+  color: var(--ink);
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
 }
 
-.pill {
+.wadah-pencapaian {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 38% 62%;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+/* ===== Kolom Kiri: Collaborate (Diam) ===== */
+.kolom-kolaborasi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+  background: var(--gray);
+}
+
+.ilustrasi-kolaborasi {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.ilustrasi-kolaborasi img {
+  max-height: 90px;
+  width: auto;
+  object-fit: contain;
+}
+
+.garis-tanah {
+  height: 2.5px;
+  width: 100%;
+  background: #000000;
+}
+
+.judul-kolaborasi {
+  font-family: var(--head);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 2.5vw, 2.35rem);
+  line-height: 1.1;
+  margin-top: 1.5rem;
+  text-transform: uppercase;
+}
+
+.subjudul-kolaborasi {
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+.tombol-kolaborasi {
   display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  padding: 6px 14px;
-  border-radius: 999px;
+  margin-top: 1.4rem;
+  padding: 0.9rem 2.1rem;
+  background: #000000;
+  color: #f5f4f2;
+  font-family: var(--head);
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0.35rem;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease;
 }
 
-.pill.dark {
-  background: #0a0a0a;
-  color: white;
-}
-.pill.light {
-  background: white;
-  color: #0a0a0a;
+.tombol-kolaborasi:hover {
+  transform: translateY(-3px);
+  background: #222222;
 }
 
+/* ===== Kolom Kanan: Viewport & Trek Horizontal ===== */
+.viewport-sertifikat {
+  width: 100%;
+  overflow: hidden;
+  padding: 1rem 0;
+}
+
+.trek-sertifikat {
+  display: flex;
+  gap: 1.75rem;
+  width: max-content;
+  padding-right: 6vw;
+  will-change: transform;
+}
+
+/* ===== Desain Kartu Sertifikat (Terang & Gelap) ===== */
+.kotak-sertifikat {
+  position: relative;
+  width: clamp(23rem, 36vw, 31rem);
+  flex-shrink: 0;
+  border-radius: 1rem;
+  padding: 1rem;
+  overflow: hidden;
+  transition: transform 0.35s ease;
+}
+
+.kotak-sertifikat.tema-terang {
+  background: var(--gray);
+  color: #000000;
+  border: 2px solid #000000;
+}
+
+.kotak-sertifikat.tema-gelap {
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+}
+
+/* Dekorasi Asterisk Transparan di Belakang Kartu */
+.dekor-bintang {
+  position: absolute;
+  width: 58%;
+  height: 58%;
+  left: 22%;
+  top: 22%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tema-terang .dekor-bintang {
+  fill: rgba(0, 0, 0, 0.14);
+}
+
+.tema-gelap .dekor-bintang {
+  fill: rgba(255, 255, 255, 0.16);
+}
+
+.kartu-sertifikat {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.85fr;
+  gap: 0.85rem;
+}
+
+.kolom-ikon {
+  border-radius: 0.65rem;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 15.5rem;
+}
+
+.tema-terang .kolom-ikon {
+  border: 1.8px solid #000000;
+}
+
+.tema-gelap .kolom-ikon {
+  border: 1.8px solid rgba(255, 255, 255, 0.7);
+}
+
+.baris-atas-kartu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.baris-sosial {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.ikon-kecil {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.titik-tiga {
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  opacity: 0.85;
+}
+
+.nama-skill {
+  font-family: var(--head);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 2.3vw, 2.2rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin-top: auto;
+}
+
+.nama-skill.teks-bertumpuk {
+  font-size: clamp(1.35rem, 1.9vw, 1.8rem);
+  line-height: 0.92;
+}
+
+.kolom-gambar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sertifikat-bingkai {
+  border-radius: 0.65rem;
+  aspect-ratio: 4 / 3;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.tema-terang .sertifikat-bingkai {
+  border: 1.8px solid #000000;
+}
+
+.tema-gelap .sertifikat-bingkai {
+  border: 1.8px solid rgba(255, 255, 255, 0.7);
+}
+
+.sertifikat-bingkai img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.kotak-sertifikat:hover .sertifikat-bingkai img {
+  transform: scale(1.05);
+}
+
+.judul-sertifikat {
+  border-radius: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  font-family: var(--head);
+  font-weight: 800;
+  font-size: clamp(0.75rem, 0.95vw, 0.9rem);
+  text-transform: uppercase;
+}
+
+.tema-terang .judul-sertifikat {
+  border: 1.8px solid #000000;
+}
+
+.tema-gelap .judul-sertifikat {
+  border: 1.8px solid rgba(255, 255, 255, 0.7);
+}
+
+/* ===== Responsif HP / Tablet ===== */
+@media (max-width: 860px) {
+  #pencapaian {
+    min-height: auto;
+    padding: 4rem 5vw;
+  }
+  .wadah-pencapaian {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  /* Di HP bisa di-swipe manual ke samping */
+  .viewport-sertifikat {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .kotak-sertifikat {
+    width: 85vw;
+    scroll-snap-align: start;
+  }
+}
 /* ========== MOTION (GSAP) ========== */
 /* .t pakai properti `translate` supaya `transform` bebas dipakai GSAP */
 .t {
@@ -528,7 +745,6 @@ body {
   transform: translateX(8px);
 }
 
-
 /* ==========================
    FONT FOLIO PRELOADER
 ========================== */
@@ -561,8 +777,7 @@ body {
   justify-content: center;
 }
 
-
- .preloader-title {
+.preloader-title {
   font-family: "CS Wicked Rippled", sans-serif;
   font-size: 29vw;
   font-weight: normal;
@@ -571,7 +786,6 @@ body {
   color: #d2d9d8;
   white-space: nowrap;
 }
-
 
 .preloader-title span {
   display: block;
@@ -588,8 +802,7 @@ body {
   height: clamp(45px, 7vw, 75px);
   object-fit: contain;
   margin-top: 35px;
-  filter: brightness(0) saturate(100%)
-    invert(88%) sepia(5%) saturate(250%)
+  filter: brightness(0) saturate(100%) invert(88%) sepia(5%) saturate(250%)
     hue-rotate(120deg);
 }
 

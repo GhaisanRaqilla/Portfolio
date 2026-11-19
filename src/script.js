@@ -473,21 +473,34 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
   }
 });
 
-/* ================= HORIZONTAL SCROLL ================= */
-if (panelsEl) {
-  gsap.to(panelsEl, {
-    x: () => -(panelsEl.scrollWidth - innerWidth),
-    ease: "none",
 
-    scrollTrigger: {
-      trigger: ".horizontal-section",
-      start: "top top",
-      end: () => "+=" + (panelsEl.scrollWidth - innerWidth),
-      scrub: 0.8,
-      pin: true,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-    },
+gsap.registerPlugin(ScrollTrigger);
+
+const sectionPencapaian = document.querySelector("#pencapaian");
+const trekSertifikat = document.querySelector("#trek-sertifikat");
+const viewportSertifikat = document.querySelector(".viewport-sertifikat");
+
+if (sectionPencapaian && trekSertifikat && viewportSertifikat) {
+  let mm = gsap.matchMedia();
+
+  // Jalankan efek pin + horizontal scroll hanya di layar desktop (> 860px)
+  mm.add("(min-width: 861px)", () => {
+    const hitungJarakGeser = () => {
+      return Math.max(0, trekSertifikat.scrollWidth - viewportSertifikat.clientWidth);
+    };
+
+    gsap.to(trekSertifikat, {
+      x: () => -hitungJarakGeser(),
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionPencapaian,
+        pin: true,
+        scrub: 1,
+        start: "top top",
+        end: () => `+=${hitungJarakGeser() + 300}`,
+        invalidateOnRefresh: true,
+      },
+    });
   });
 }
 
