@@ -1,4 +1,3 @@
-
 /* ================= GSAP ================= */
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,10 +12,8 @@ let waktuMinimumSelesai = false;
 let preloaderSelesai = false;
 
 if (preloader) {
-  // Animasi masuk preloader
   const introPreloader = gsap.timeline({
     onComplete: () => {
-      // Logo terus berputar selama menunggu halaman siap
       gsap.to(".preloader-logo", {
         rotation: "+=360",
         duration: 4,
@@ -46,13 +43,11 @@ if (preloader) {
       "-=0.7"
     );
 
-  // Minimal waktu preloader: 3 detik
   gsap.delayedCall(3, () => {
     waktuMinimumSelesai = true;
     cekPreloader();
   });
 
-  // Deteksi seluruh halaman selesai dimuat
   window.addEventListener("load", () => {
     halamanSiap = true;
     cekPreloader();
@@ -66,16 +61,13 @@ if (preloader) {
   }
 
   function keluarPreloader() {
-    // Hentikan putaran logo sebelum animasi keluar
     gsap.killTweensOf(".preloader-logo");
 
     gsap.timeline({
-      // Homepage mulai tepat saat preloader mulai menghilang
       onStart: () => {
         window.preloaderComplete = true;
         window.dispatchEvent(new Event("preloaderComplete"));
       },
-
       onComplete: () => {
         gsap.set(preloader, {
           display: "none",
@@ -83,11 +75,12 @@ if (preloader) {
           pointerEvents: "none",
         });
 
-        // Scroll aktif lagi setelah preloader benar-benar hilang
         document.documentElement.classList.remove("is-loading");
 
-        // Refresh setelah scroll dibuka kembali
-        requestAnimationFrame(() => ScrollTrigger.refresh());
+        requestAnimationFrame(() => {
+          ScrollTrigger.sort();
+          ScrollTrigger.refresh();
+        });
       },
     })
       .to(
@@ -122,7 +115,6 @@ if (preloader) {
       );
   }
 } else {
-  // Fallback jika elemen preloader tidak ditemukan
   window.preloaderComplete = true;
   document.documentElement.classList.remove("is-loading");
 }
@@ -187,7 +179,6 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
   const fullCh = split($("#full"));
   const stackCh = split($("#stack"));
 
-  // Animasi homepage menunggu preloader selesai
   function jalankanAnimasiHome() {
     gsap.timeline({ defaults: { ease: "power4.out" } })
       .from(fullCh, {
@@ -218,15 +209,10 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       }, "-=0.9");
   }
 
-  // Cek apakah preloader sudah selesai
   if (window.preloaderComplete === true) {
     jalankanAnimasiHome();
   } else {
-    window.addEventListener(
-      "preloaderComplete",
-      jalankanAnimasiHome,
-      { once: true }
-    );
+    window.addEventListener("preloaderComplete", jalankanAnimasiHome, { once: true });
   }
 
   /* ================= HERO PARALLAX ================= */
@@ -244,7 +230,7 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     .to("#star", { yPercent: 80 }, 0);
 
   /* ================= HERO MOUSE ================= */
-  if (fine) {
+  if (fine && $("#home")) {
     const layers = [
       ["#full", -14],
       ["#stack", 18],
@@ -253,14 +239,8 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       ["#star", 40],
     ].map(([sel, d]) => ({
       d,
-      x: gsap.quickTo(sel, "x", {
-        duration: 0.8,
-        ease: "power3",
-      }),
-      y: gsap.quickTo(sel, "y", {
-        duration: 0.8,
-        ease: "power3",
-      }),
+      x: gsap.quickTo(sel, "x", { duration: 0.8, ease: "power3" }),
+      y: gsap.quickTo(sel, "y", { duration: 0.8, ease: "power3" }),
     }));
 
     $("#home").addEventListener("pointermove", (e) => {
@@ -274,14 +254,16 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     });
   }
 
-  /* KLIK BINTANG */
-  $("#star").addEventListener("click", () => {
-    gsap.to("#star", {
-      rotation: "+=720",
-      duration: 1.4,
-      ease: "power4.out",
+  /* KLIK BINTANG HOME */
+  if ($("#star")) {
+    $("#star").addEventListener("click", () => {
+      gsap.to("#star", {
+        rotation: "+=720",
+        duration: 1.4,
+        ease: "power4.out",
+      });
     });
-  });
+  }
 
   /* ================= ABOUT ================= */
   gsap.timeline({
@@ -300,41 +282,12 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
         clearProps: "clipPath",
       }
     )
-    .from("#p", {
-      y: 30,
-      opacity: 0,
-      duration: 0.9,
-      ease: "power3.out",
-    }, "-=0.5")
-    .from("#hr", {
-      scaleX: 0,
-      transformOrigin: "left center",
-      duration: 1,
-      ease: "power3.inOut",
-    }, "-=0.5")
-    .from("#ts", {
-      y: 30,
-      opacity: 0,
-      duration: 0.7,
-      ease: "power3.out",
-    }, "-=0.4")
-    .from("#d1, #s1, #d2, #s2", {
-      y: 24,
-      opacity: 0,
-      duration: 0.6,
-      stagger: 0.12,
-      ease: "power3.out",
-    }, "-=0.3")
-    .from("#photo", {
-      yPercent: 100,
-      duration: 1.2,
-      ease: "power4.out",
-    }, 0.2)
-    .from("#astar", {
-      scale: 0,
-      duration: 0.9,
-      ease: "back.out(2)",
-    }, "-=0.8");
+    .from("#p", { y: 30, opacity: 0, duration: 0.9, ease: "power3.out" }, "-=0.5")
+    .from("#hr", { scaleX: 0, transformOrigin: "left center", duration: 1, ease: "power3.inOut" }, "-=0.5")
+    .from("#ts", { y: 30, opacity: 0, duration: 0.7, ease: "power3.out" }, "-=0.4")
+    .from("#d1, #s1, #d2, #s2", { y: 24, opacity: 0, duration: 0.6, stagger: 0.12, ease: "power3.out" }, "-=0.3")
+    .from("#photo", { yPercent: 100, duration: 1.2, ease: "power4.out" }, 0.2)
+    .from("#astar", { scale: 0, duration: 0.9, ease: "back.out(2)" }, "-=0.8");
 
   /* ABOUT STAR */
   gsap.to("#astar", {
@@ -348,33 +301,148 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     },
   });
 
-  /* ================= ACHIEVEMENTS ================= */
-  gsap.from(".achievements-header > *", {
-    y: 40,
-    opacity: 0,
-    duration: 0.9,
-    stagger: 0.15,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: ".achievements-header",
-      start: "top 85%",
-      once: true,
-    },
-  });
+  /* ================= HEADER PENCAPAIAN & LOGO SPIN ================= */
+  if ($(".header-pencapaian")) {
+    gsap.from(".judul-section-pencapaian", {
+      y: 40,
+      opacity: 0,
+      duration: 0.9,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: "#pencapaian",
+        start: "top 80%",
+        once: true,
+      },
+    });
 
-  gsap.from(".panel", {
-    x: 140,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.12,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: ".achievements-header",
-      start: "top 75%",
-      once: true,
-    },
-  });
+    gsap.from("#pstar", {
+      scale: 0,
+      rotation: -180,
+      duration: 1,
+      ease: "back.out(1.7)",
+      scrollTrigger: {
+        trigger: "#pencapaian",
+        start: "top 80%",
+        once: true,
+      },
+    });
+  }
 
+  if ($("#pstar")) {
+    $("#pstar").addEventListener("click", () => {
+      gsap.to("#pstar", {
+        rotation: "+=720",
+        duration: 1.4,
+        ease: "power4.out",
+      });
+    });
+  }
+
+  /* ================= PENCAPAIAN MENIMPA ABOUT & HORIZONTAL SCROLL ================= */
+  const sectionAbout = document.querySelector("#about");
+  const sectionPencapaian = document.querySelector("#pencapaian");
+  const trekSertifikat = document.querySelector("#trek-sertifikat");
+  const viewportSertifikat = document.querySelector(".viewport-sertifikat");
+
+  // 1. Tahan #about agar #pencapaian meluncur naik menimpanya
+  if (sectionAbout && sectionPencapaian) {
+    ScrollTrigger.create({
+      trigger: sectionAbout,
+      start: () => (sectionAbout.offsetHeight <= window.innerHeight ? "top top" : "bottom bottom"),
+      endTrigger: sectionPencapaian,
+      end: "top top",
+      pin: true,
+      pinSpacing: false,
+      invalidateOnRefresh: true,
+    });
+  }
+
+  // 2. Pin #pencapaian & geser horizontal sertifikat di desktop
+  if (sectionPencapaian && trekSertifikat && viewportSertifikat) {
+    mm.add("(min-width: 861px)", () => {
+      const hitungJarakGeser = () => {
+        return Math.max(0, trekSertifikat.scrollWidth - viewportSertifikat.clientWidth);
+      };
+
+      gsap.to(trekSertifikat, {
+        x: () => -hitungJarakGeser(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionPencapaian,
+          pin: true,
+          scrub: 1,
+          start: "top top",
+          end: () => `+=${hitungJarakGeser() + 300}`,
+          invalidateOnRefresh: true,
+        },
+      });
+    });
+  }
+
+  /* ================= MINI DINO RUNNER ================= */
+  const arenaDino = document.querySelector("#arena-dino");
+  const karakterDino = document.querySelector("#karakter-dino");
+  const kaktus = document.querySelector("#rintangan-kaktus");
+
+  if (arenaDino && karakterDino && kaktus) {
+    let sedangLompat = false;
+
+    function lompatDino() {
+      if (sedangLompat) return;
+      sedangLompat = true;
+      karakterDino.classList.add("sedang-lompat");
+
+      gsap.timeline({
+        onComplete: () => {
+          sedangLompat = false;
+          karakterDino.classList.remove("sedang-lompat");
+        },
+      })
+        .to(karakterDino, {
+          y: -58,
+          rotation: -8,
+          duration: 0.28,
+          ease: "power2.out",
+        })
+        .to(karakterDino, {
+          y: 0,
+          rotation: 0,
+          duration: 0.28,
+          ease: "power2.in",
+        });
+    }
+
+    gsap.to(kaktus, {
+      x: () => -(arenaDino.offsetWidth + 60),
+      duration: 2.2,
+      repeat: -1,
+      ease: "none",
+      onUpdate: function () {
+        const rectDino = karakterDino.getBoundingClientRect();
+        const rectKaktus = kaktus.getBoundingClientRect();
+        const jarak = rectKaktus.left - rectDino.right;
+
+        if (jarak > 0 && jarak < 45 && !sedangLompat) {
+          lompatDino();
+        }
+      },
+    });
+
+    arenaDino.addEventListener("click", lompatDino);
+
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Space") {
+        const rect = arenaDino.getBoundingClientRect();
+        const terlihat = rect.top >= 0 && rect.bottom <= window.innerHeight;
+        if (terlihat) {
+          e.preventDefault();
+          lompatDino();
+        }
+      }
+    });
+  }
+
+  /* ================= ACHIEVEMENTS EXTRA EFFECTS ================= */
   if (panelsEl) {
     const skewSet = gsap.quickSetter(".panel", "skewX", "deg");
     const proxy = { skew: 0 };
@@ -383,13 +451,11 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       trigger: ".horizontal-section",
       start: "top top",
       end: () => "+=" + (panelsEl.scrollWidth - innerWidth),
-
       onUpdate(self) {
         const s = gsap.utils.clamp(-8, 8, self.getVelocity() / -300);
 
         if (Math.abs(s) > Math.abs(proxy.skew)) {
           proxy.skew = s;
-
           gsap.to(proxy, {
             skew: 0,
             duration: 0.8,
@@ -402,26 +468,16 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
     });
   }
 
-  /* PANEL 3D */
+  /* PANEL 3D & CUSTOM CURSOR */
   if (fine) {
-    gsap.set(".panel", {
-      transformPerspective: 900,
-    });
+    gsap.set(".panel", { transformPerspective: 900 });
 
     document.querySelectorAll(".panel").forEach((p) => {
-      const rx = gsap.quickTo(p, "rotationX", {
-        duration: 0.5,
-        ease: "power3",
-      });
-
-      const ry = gsap.quickTo(p, "rotationY", {
-        duration: 0.5,
-        ease: "power3",
-      });
+      const rx = gsap.quickTo(p, "rotationX", { duration: 0.5, ease: "power3" });
+      const ry = gsap.quickTo(p, "rotationY", { duration: 0.5, ease: "power3" });
 
       p.addEventListener("pointermove", (e) => {
         const r = p.getBoundingClientRect();
-
         ry(((e.clientX - r.left) / r.width - 0.5) * 14);
         rx(-((e.clientY - r.top) / r.height - 0.5) * 14);
       });
@@ -432,25 +488,14 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
       });
     });
 
-    /* CUSTOM CURSOR */
     const c = document.createElement("div");
     c.className = "cursor";
     document.body.append(c);
 
-    gsap.set(c, {
-      xPercent: -50,
-      yPercent: -50,
-    });
+    gsap.set(c, { xPercent: -50, yPercent: -50 });
 
-    const cx = gsap.quickTo(c, "x", {
-      duration: 0.25,
-      ease: "power3",
-    });
-
-    const cy = gsap.quickTo(c, "y", {
-      duration: 0.25,
-      ease: "power3",
-    });
+    const cx = gsap.quickTo(c, "x", { duration: 0.25, ease: "power3" });
+    const cy = gsap.quickTo(c, "y", { duration: 0.25, ease: "power3" });
 
     let shown = false;
 
@@ -459,120 +504,27 @@ mm.add("(prefers-reduced-motion: no-preference)", () => {
         shown = true;
         c.style.opacity = 1;
       }
-
       cx(e.clientX);
       cy(e.clientY);
     });
 
     document.addEventListener("pointerover", (e) => {
       gsap.to(c, {
-        scale: e.target.closest(".panel, .tech, #star") ? 3 : 1,
+        scale: e.target.closest(".panel, .tech, #star, #pstar, .kartu-polaroid, .arena-dino") ? 3 : 1,
         duration: 0.3,
       });
     });
   }
 });
 
-
-gsap.registerPlugin(ScrollTrigger);
-
-const sectionPencapaian = document.querySelector("#pencapaian");
-const trekSertifikat = document.querySelector("#trek-sertifikat");
-const viewportSertifikat = document.querySelector(".viewport-sertifikat");
-
-if (sectionPencapaian && trekSertifikat && viewportSertifikat) {
-  let mm = gsap.matchMedia();
-
-  // Jalankan efek pin + horizontal scroll hanya di layar desktop (> 860px)
-  mm.add("(min-width: 861px)", () => {
-    const hitungJarakGeser = () => {
-      return Math.max(0, trekSertifikat.scrollWidth - viewportSertifikat.clientWidth);
-    };
-
-    gsap.to(trekSertifikat, {
-      x: () => -hitungJarakGeser(),
-      ease: "none",
-      scrollTrigger: {
-        trigger: sectionPencapaian,
-        pin: true,
-        scrub: 1,
-        start: "top top",
-        end: () => `+=${hitungJarakGeser() + 300}`,
-        invalidateOnRefresh: true,
-      },
-    });
-  });
+/* ================= REFRESH & SORT ================= */
+function refreshScrollTriggers() {
+  ScrollTrigger.sort();
+  ScrollTrigger.refresh();
 }
 
-/* ================= REFRESH ================= */
-addEventListener("load", () => ScrollTrigger.refresh());
-
+addEventListener("load", refreshScrollTriggers);
 if (document.fonts) {
-  document.fonts.ready.then(() => ScrollTrigger.refresh());
+  document.fonts.ready.then(refreshScrollTriggers);
 }
-/* ================= MINI DINO RUNNER ================= */
-const arenaDino = document.querySelector("#arena-dino");
-const karakterDino = document.querySelector("#karakter-dino");
-const kaktus = document.querySelector("#rintangan-kaktus");
 
-if (arenaDino && karakterDino && kaktus) {
-  let sedangLompat = false;
-
-  function lompatDino() {
-    if (sedangLompat) return;
-    sedangLompat = true;
-    karakterDino.classList.add("sedang-lompat");
-
-    gsap.timeline({
-      onComplete: () => {
-        sedangLompat = false;
-        karakterDino.classList.remove("sedang-lompat");
-      },
-    })
-      .to(karakterDino, {
-        y: -58,
-        rotation: -8,
-        duration: 0.28,
-        ease: "power2.out",
-      })
-      .to(karakterDino, {
-        y: 0,
-        rotation: 0,
-        duration: 0.28,
-        ease: "power2.in",
-      });
-  }
-
-  // Gerakkan kaktus terus-menerus dari kanan ke kiri
-  gsap.to(kaktus, {
-    x: () => -(arenaDino.offsetWidth + 60),
-    duration: 2.2,
-    repeat: -1,
-    ease: "none",
-    onUpdate: function () {
-      // Auto-jump pintar pas kaktus mendekati karakter
-      const rectDino = karakterDino.getBoundingClientRect();
-      const rectKaktus = kaktus.getBoundingClientRect();
-      const jarak = rectKaktus.left - rectDino.right;
-
-      if (jarak > 0 && jarak < 45 && !sedangLompat) {
-        lompatDino();
-      }
-    },
-  });
-
-  // Klik arena buat lompat manual
-  arenaDino.addEventListener("click", lompatDino);
-
-  // Tekan spasi buat lompat kalau section pencapaian lagi kelihatan
-  window.addEventListener("keydown", (e) => {
-    if (e.code === "Space") {
-      const rect = arenaDino.getBoundingClientRect();
-      const terlihat = rect.top >= 0 && rect.bottom <= window.innerHeight;
-      if (terlihat) {
-        e.preventDefault();
-        lompatDino();
-      }
-    }
-  });
-}
