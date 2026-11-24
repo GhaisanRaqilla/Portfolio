@@ -510,3 +510,69 @@ addEventListener("load", () => ScrollTrigger.refresh());
 if (document.fonts) {
   document.fonts.ready.then(() => ScrollTrigger.refresh());
 }
+/* ================= MINI DINO RUNNER ================= */
+const arenaDino = document.querySelector("#arena-dino");
+const karakterDino = document.querySelector("#karakter-dino");
+const kaktus = document.querySelector("#rintangan-kaktus");
+
+if (arenaDino && karakterDino && kaktus) {
+  let sedangLompat = false;
+
+  function lompatDino() {
+    if (sedangLompat) return;
+    sedangLompat = true;
+    karakterDino.classList.add("sedang-lompat");
+
+    gsap.timeline({
+      onComplete: () => {
+        sedangLompat = false;
+        karakterDino.classList.remove("sedang-lompat");
+      },
+    })
+      .to(karakterDino, {
+        y: -58,
+        rotation: -8,
+        duration: 0.28,
+        ease: "power2.out",
+      })
+      .to(karakterDino, {
+        y: 0,
+        rotation: 0,
+        duration: 0.28,
+        ease: "power2.in",
+      });
+  }
+
+  // Gerakkan kaktus terus-menerus dari kanan ke kiri
+  gsap.to(kaktus, {
+    x: () => -(arenaDino.offsetWidth + 60),
+    duration: 2.2,
+    repeat: -1,
+    ease: "none",
+    onUpdate: function () {
+      // Auto-jump pintar pas kaktus mendekati karakter
+      const rectDino = karakterDino.getBoundingClientRect();
+      const rectKaktus = kaktus.getBoundingClientRect();
+      const jarak = rectKaktus.left - rectDino.right;
+
+      if (jarak > 0 && jarak < 45 && !sedangLompat) {
+        lompatDino();
+      }
+    },
+  });
+
+  // Klik arena buat lompat manual
+  arenaDino.addEventListener("click", lompatDino);
+
+  // Tekan spasi buat lompat kalau section pencapaian lagi kelihatan
+  window.addEventListener("keydown", (e) => {
+    if (e.code === "Space") {
+      const rect = arenaDino.getBoundingClientRect();
+      const terlihat = rect.top >= 0 && rect.bottom <= window.innerHeight;
+      if (terlihat) {
+        e.preventDefault();
+        lompatDino();
+      }
+    }
+  });
+}

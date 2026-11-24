@@ -843,3 +843,83 @@ body {
     bottom: -75px;
   }
 }
+/* ========== MINI DINO RUNNER (CHROME OFFLINE STYLE) ========== */
+.arena-dino {
+  position: relative;
+  width: 100%;
+  height: 115px;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 0.25rem;
+}
+
+/* Karakter Nodi Lari & Lompat */
+.karakter-dino {
+  position: absolute;
+  bottom: 4px;
+  left: 18%;
+  height: 76px;
+  width: auto;
+  object-fit: contain;
+  transform-origin: bottom center;
+  animation: dinoLari 0.26s steps(2, end) infinite;
+  z-index: 2;
+}
+
+/* Efek goyang/langkah patah-patah ala game 8-bit */
+@keyframes dinoLari {
+  0% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+}
+
+/* Pas lagi lompat, matiin animasi lari */
+.karakter-dino.sedang-lompat {
+  animation: none !important;
+}
+
+/* Rintangan Kaktus */
+.rintangan-kaktus {
+  position: absolute;
+  bottom: 3px;
+  right: -40px;
+  z-index: 2;
+  will-change: transform;
+}
+
+/* Garis Tanah Putus-putus yang Jalan */
+.garis-tanah-bergerak {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 3px;
+  background-image: repeating-linear-gradient(
+    to right,
+    #000000 0px,
+    #000000 18px,
+    transparent 18px,
+    transparent 24px,
+    #000000 24px,
+    #000000 28px,
+    transparent 28px,
+    transparent 34px
+  );
+  animation: tanahJalan 1.6s linear infinite;
+}
+
+@keyframes tanahJalan {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
